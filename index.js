@@ -53,6 +53,11 @@ app.get("/aulas/:id", (req, res) => {
     } catch (erro) {
         res.status(500).json({erro: erro.message})
     }
+}) 
+app.get("/horario/:dia_sem" , (req, res) => {
+    const dia_sem = req.params.dia_sem
+    const aulas = JSON.parse(fs.readFileSync("aulas.json", "utf8"))
+    const dia = aulas.filter((aulas) => aulas.dia_sem == dia_sem)
 })
 
 app.delete("/aulas/:id", (req, res) => {
@@ -69,8 +74,4 @@ app.delete("/aulas/:id", (req, res) => {
     } catch (error){
         res.status(500).json({erro: error.message})
     }
-})
-
-app.listen(port, ()=>{
-    console.log("API rodando na porta" + port)
 })
