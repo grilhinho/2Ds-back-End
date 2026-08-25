@@ -20,9 +20,11 @@ function atualizarID() {
 
 
 app.post("/aulas", (req, res) => {
-    const aula = req.body
+    const aula = req.body 
     try {
         const aulas = JSON.parse(fs.readFileSync("aulas.json", "utf8"))
+        aula.id = id
+        atualizarID()
         aulas.push(aula)
         fs.writeFileSync("aulas.json", JSON.stringify(aulas), "utf8")
         res.status(201).json({resposta: "Aula cadastrada!"})
@@ -74,4 +76,6 @@ app.delete("/aulas/:id", (req, res) => {
     } catch (error){
         res.status(500).json({erro: error.message})
     }
+}); app.listen(port, () => {
+    console.log("API rodando da porta " + port)
 })
